@@ -1,4 +1,5 @@
 import './index.css'
+import LanguageContext from '../../context/LanguageContext'
 
 const newWaysToConnectContent = {
   EN: {
@@ -16,30 +17,40 @@ const newWaysToConnectContent = {
     description:
       'మైక్రోసాఫ్ట్ బృందాలతో మీ డెస్క్‌టాప్ నుండి మీరు శ్రద్ధ వహించే వ్యక్తులతో తక్షణమే కనెక్ట్ అవ్వండి. అవి ఏ పరికరంలో ఉన్నా సరే ఉచితంగా కాల్ చేయండి లేదా చాట్ చేయండి',
   },
+  TA: {
+    heading: 'இணைக்க புதிய வழிகள்',
+    description:
+      'மைக்ரோசாஃப்ட் டீம்களுடன் உங்கள் டெஸ்க்டாப்பில் இருந்தே நீங்கள் விரும்பும் நபர்களுடன் உடனடியாக இணைக்கவும். அவர்கள் எந்த சாதனத்தில் இருந்தாலும், இலவசமாக அழைக்கவும் அல்லது அரட்டையடிக்கவும்.',
+  },
 }
 
-const NewWaysToConnect = props => {
-  const getNewWaysToConnectData = activeLanguage => {
-    switch (activeLanguage) {
-      case 'EN':
-        return newWaysToConnectContent.EN
-      case 'HI':
-        return newWaysToConnectContent.HI
-      case 'TE':
-        return newWaysToConnectContent.TE
-      default:
-        return null
-    }
-  }
-  const {activeLanguage} = props
-  const {heading, description} = getNewWaysToConnectData(activeLanguage)
+const NewWaysToConnect = () => (
+  <LanguageContext.Consumer>
+    {value => {
+      const getNewWaysToConnectData = activeLanguage => {
+        switch (activeLanguage) {
+          case 'EN':
+            return newWaysToConnectContent.EN
+          case 'HI':
+            return newWaysToConnectContent.HI
+          case 'TE':
+            return newWaysToConnectContent.TE
+          default:
+            return null
+        }
+      }
+      const {activeLanguage} = value
 
-  return (
-    <div className="new-ways-to-connect-container">
-      <h1 className="new-ways-to-content-heading">{heading}</h1>
-      <p className="new-ways-to-content-description">{description}</p>
-    </div>
-  )
-}
+      const {heading, description} = getNewWaysToConnectData(activeLanguage)
+
+      return (
+        <div className="new-ways-to-connect-container">
+          <h1 className="new-ways-to-content-heading">{heading}</h1>
+          <p className="new-ways-to-content-description">{description}</p>
+        </div>
+      )
+    }}
+  </LanguageContext.Consumer>
+)
 
 export default NewWaysToConnect
